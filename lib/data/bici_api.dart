@@ -5,7 +5,7 @@ class BiciApi {
   static const String _base = 'https://acoruna.publicbikesystem.net/customer/gbfs/v2/gl';
 
   //Conexión a los datos estaticos (genericos)
-  Future<List<dynamic>> getInfoEstacion() async {
+  Future<List<dynamic>> getInfoEstaciones() async {
     final url = Uri.parse('$_base/station_information');
     final res = await http.get(url);
 
@@ -22,7 +22,7 @@ class BiciApi {
   }
 
   //Conexión al los datos dinamicos
-  Future<List<dynamic>> getEstadoEstacion() async {
+  Future<List<dynamic>> getEstadoEstaciones() async {
     final url = Uri.parse('$_base/station_status');
     final res = await http.get(url);
 

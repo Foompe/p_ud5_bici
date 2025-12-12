@@ -1,13 +1,13 @@
 //Información (estatica) general de las estaciones
 
-class EstationInfo {
+class EstacionInfo {
   final String stationId;
   final String name;
   final String physicalConfiguration; //{REGULAR,ELECTRICBIKESTATION }
   final String address;
   final int capacity;
 
-  EstationInfo({
+  EstacionInfo({
     required this.stationId,
     required this.name,
     required this.physicalConfiguration,
@@ -15,8 +15,8 @@ class EstationInfo {
     required this.capacity,
   });
 
-  factory EstationInfo.fromJson(Map<String, dynamic> json) {
-    return EstationInfo(
+  factory EstacionInfo.fromJson(Map<String, dynamic> json) {
+    return EstacionInfo(
       stationId: json['station_id'].toString(),
       name: (json['name'] ?? '') as String,
       physicalConfiguration: (json['physical_configuration'] ?? "") as String,
