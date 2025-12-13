@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:p_ud5_bici/viewmodels/bici_report_vm.dart';
+import 'package:provider/provider.dart';
 
 class BiciReportPage extends StatefulWidget {
   const BiciReportPage({super.key});
