@@ -13,12 +13,12 @@ class BiciApi {
       throw Exception("HTTP ${res.statusCode}");
     }
 
-    final decoded = jsonDecode(res.body);
-    if(decoded is! List) {
-      throw Exception("Respuesta inesperada");
-    }
+    //final decoded = jsonDecode(res.body);
+    //return decoded;
 
-    return decoded;
+    final decoded = jsonDecode(res.body) as Map<String, dynamic>;
+    return decoded['data']['stations'] as List<dynamic>;
+    
   }
 
   //Conexión al los datos dinamicos
@@ -30,11 +30,14 @@ class BiciApi {
       throw Exception("HTTP ${res.statusCode}");
     }
 
-    final decoded = jsonDecode(res.body);
-    if(decoded is! List) {
-      throw Exception("Respuesta inesperada");
-    }
+    //final decoded = jsonDecode(res.body);
+    //if(decoded is! List) {
+    //  throw Exception("Respuesta inesperada");
+   // }
 
-    return decoded;
+    //return decoded;
+
+    final decoded = jsonDecode(res.body) as Map<String, dynamic>;
+    return decoded['data']['stations'] as List<dynamic>;
   }
 }
