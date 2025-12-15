@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:p_ud5_bici/viewmodels/estacion_ui_data.dart';
+import 'package:p_ud5_bici/viewmodels/dto/estacion_ui_data.dart';
 
 class FavoriteStationCard extends StatelessWidget {
   final StationUiData station;

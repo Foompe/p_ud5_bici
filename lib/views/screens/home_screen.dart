@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:p_ud5_bici/viewmodels/bici_report_vm.dart';
-import 'package:p_ud5_bici/viewmodels/estacion_ui_data.dart';
+import 'package:p_ud5_bici/viewmodels/dto/estacion_ui_data.dart';
 import 'package:p_ud5_bici/views/widgets/favorite_station_card.dart';
 import 'package:p_ud5_bici/views/widgets/station_detail_sheet.dart';
 import 'package:p_ud5_bici/views/widgets/station_list_item.dart';

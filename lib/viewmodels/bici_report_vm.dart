@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:p_ud5_bici/data/bici_repository.dart';
 import 'package:p_ud5_bici/models/estacion_info.dart';
 import 'package:p_ud5_bici/models/estacion_status.dart';
-import 'package:p_ud5_bici/viewmodels/estacion_ui_data.dart';
+import 'package:p_ud5_bici/viewmodels/dto/estacion_ui_data.dart';
 
 class BiciReportVm extends ChangeNotifier {
   final BiciRepository repo;

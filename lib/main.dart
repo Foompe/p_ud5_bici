@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:p_ud5_bici/data/bici_api.dart';
 import 'package:p_ud5_bici/data/bici_repository.dart';
 import 'package:p_ud5_bici/views/screens/home_screen.dart';
-import 'package:provider/provider.dart';
 import 'package:p_ud5_bici/viewmodels/bici_report_vm.dart';
+import 'package:provider/provider.dart';
+
 
 void main() {
   runApp(const MyApp());
