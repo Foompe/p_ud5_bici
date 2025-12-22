@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:p_ud5_bici/services/estacion_pdf_exporter.dart';
 import 'package:p_ud5_bici/viewmodels/dto/estacion_ui_data.dart';
 import 'package:p_ud5_bici/views/widgets/grafico_ocupacion_estacion.dart';
 
@@ -26,6 +27,15 @@ class StationDetailScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(station.name, maxLines: 1, overflow: TextOverflow.ellipsis),
       ),
+
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          StationPdfExporter.exportStationDetail(station);
+        },
+        icon: const Icon(Icons.picture_as_pdf),
+        label: const Text('Exportar PDF'),
+      ),
+
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
