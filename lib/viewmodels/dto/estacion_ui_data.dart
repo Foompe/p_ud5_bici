@@ -1,5 +1,5 @@
 // DTO de presentación para la vista
-class StationUiData {
+class EstacionUiData {
   //Identificador
   final String id;
 
@@ -7,10 +7,10 @@ class StationUiData {
   final String name;
   final String address;
   final int capacity;
-  final String physicalConfiguration;
+  final bool isElectricStation;
 
   //Datos dinamicos de la estación
-  final String status; 
+  final bool isInService; 
 
   final int numBikesAvailable;
   final int numBikesDisabled;
@@ -35,13 +35,13 @@ class StationUiData {
   final String decisionText; // “Sí / Quizá / No”
   final bool isFavorite;
 
-  StationUiData({
+  EstacionUiData({
     required this.id,
     required this.name,
     required this.address,
     required this.capacity,
-    required this.physicalConfiguration,
-    required this.status,
+    required this.isElectricStation,
+    required this.isInService,
     required this.numBikesAvailable,
     required this.numBikesDisabled,
     required this.numDocksAvailable,

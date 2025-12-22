@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:p_ud5_bici/viewmodels/bici_report_vm.dart';
 import 'package:p_ud5_bici/viewmodels/dto/estacion_ui_data.dart';
+import 'package:p_ud5_bici/views/screens/estacion_detail_screen.dart';
 import 'package:p_ud5_bici/views/widgets/favorite_station_card.dart';
-import 'package:p_ud5_bici/views/widgets/station_detail_sheet.dart';
+import 'package:p_ud5_bici/views/widgets/station_bar_chart.dart';
 import 'package:p_ud5_bici/views/widgets/station_list_item.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +16,7 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Bici Coruña'),
+        title: const Text('Bici Coruña 2.0'),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -24,59 +25,66 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       body: SafeArea(
-        child: _buildBody(context, vm),
+        child: vm.loading
+            ? const Center(child: CircularProgressIndicator())
+            : vm.error != null
+                ? Center(child: Text('Error: ${vm.error}'))
+                : CustomScrollView(
+                    slivers: [
+                      // 📊 Gráfica
+                      SliverToBoxAdapter(
+                        child: StationBarChart(stations: vm.stations),
+                      ),
+
+                      // ⭐ Favorito
+                      if (vm.favoriteStation != null)
+                        SliverToBoxAdapter(
+                          child: FavoriteStationCard(
+                            station: vm.favoriteStation!,
+                            onTap: () =>
+                                _openDetail(context, vm.favoriteStation!),
+                          ),
+                        ),
+
+                      // 📝 Título lista
+                      const SliverToBoxAdapter(
+                        child: Padding(
+                          padding: EdgeInsets.all(16),
+                          child: Text(
+                            'Resto de estaciones',
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ),
+
+                      // 📋 Lista (con espacio y scroll)
+                      SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (context, i) {
+                            final station = vm.otherStations[i];
+                            return StationListItem(
+                              station: station,
+                              onTap: () =>
+                                  _openDetail(context, station),
+                              onFavoriteTap: () =>
+                                  vm.setFavorite(station.id),
+                            );
+                          },
+                          childCount: vm.otherStations.length,
+                        ),
+                      ),
+                    ],
+                  ),
       ),
     );
   }
 
-  Widget _buildBody(BuildContext context, BiciReportVm vm) {
-    if (vm.loading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-
-    if (vm.error != null) {
-      return Center(child: Text('Error: ${vm.error}'));
-    }
-
-    return Column(
-      children: [
-        if (vm.favoriteStation != null)
-          FavoriteStationCard(
-            station: vm.favoriteStation!,
-            onTap: () => _openDetail(context, vm.favoriteStation!),
-          ),
-
-        const Padding(
-          padding: EdgeInsets.all(16),
-          child: Text(
-            'Resto de estaciones',
-            style: TextStyle(fontWeight: FontWeight.w600),
-          ),
-        ),
-
-        Expanded(
-          child: ListView.separated(
-            itemCount: vm.otherStations.length,
-            separatorBuilder: (_, _) => const Divider(height: 1),
-            itemBuilder: (_, i) {
-              final station = vm.otherStations[i];
-              return StationListItem(
-                station: station,
-                onTap: () => _openDetail(context, station),
-                onFavoriteTap: () => vm.setFavorite(station.id),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-
-  void _openDetail(BuildContext context, StationUiData station) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (_) => StationDetailSheet(station: station),
+  void _openDetail(BuildContext context, EstacionUiData station) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+      builder: (_) => StationDetailScreen(station: station),
+    )
     );
   }
 }
