@@ -52,6 +52,7 @@ class GraficoOcupacionEstacion extends StatelessWidget {
 
         const SizedBox(height: 12),
 
+        //Leyenda
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -98,7 +99,6 @@ class GraficoOcupacionEstacion extends StatelessWidget {
       value: value,
       color: color,
       radius: 45,
-      title: value == 0 ? '' : title,
       titleStyle: const TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.bold,

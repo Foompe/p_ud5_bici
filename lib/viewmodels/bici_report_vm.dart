@@ -56,9 +56,7 @@ class BiciReportVm extends ChangeNotifier {
       final totalBikes = bikes + ebikes + boost;
 
       final occupancyPercent = info.capacity > 0
-          ? double.parse(
-              ((totalBikes / info.capacity) * 100).toStringAsFixed(1),
-            )
+          ? (totalBikes / info.capacity) * 100
           : 0.0;
 
       final decisionText = _decisionText(bikes, ebikes, boost);

@@ -33,7 +33,7 @@ class StationBarChart extends StatelessWidget {
             ),
             const SizedBox(height: 24),
 
-            // 📊 Gráfico
+            //Gráfico
             SizedBox(
               height: 320,
               child: BarChart(
@@ -152,7 +152,7 @@ class StationBarChart extends StatelessWidget {
 
             const SizedBox(height: 16),
 
-            // 🧾 Leyenda
+            //Leyenda
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

@@ -4,7 +4,7 @@ import 'package:p_ud5_bici/views/widgets/grafico_ocupacion_estacion.dart';
 
 class FavoriteStationCard extends StatelessWidget {
   final EstacionUiData station;
-  final VoidCallback onTap;
+  final VoidCallback onTap;  //! Revisar esto!!
 
   const FavoriteStationCard({
     super.key,
@@ -38,7 +38,7 @@ class FavoriteStationCard extends StatelessWidget {
 
               const SizedBox(height: 8),
 
-              // ✅ Gráfico reutilizable
+              //Gráfico
               GraficoOcupacionEstacion(
                 station: station,
               ),

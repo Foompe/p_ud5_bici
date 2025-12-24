@@ -26,13 +26,12 @@ class StationListItem extends StatelessWidget {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // 📊 Ocupación
           Container(
             width: 60,
             height: 24,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: theme.colorScheme.surfaceVariant,
+              color: theme.colorScheme.surfaceContainerHighest,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Row(
@@ -40,13 +39,13 @@ class StationListItem extends StatelessWidget {
               children: [
                 Icon(
                   Icons.pie_chart,
-                  size: 14,
+                  size: 16,
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
                 const SizedBox(width: 4),
                 Text(
                   '${station.occupancyPercent.toStringAsFixed(0)}%',
-                  style: theme.textTheme.labelSmall,
+                  style: theme.textTheme.labelLarge,
                 ),
               ],
             ),
@@ -54,13 +53,10 @@ class StationListItem extends StatelessWidget {
 
           const SizedBox(width: 32),
 
-          // ⭐ Favorito (ligero, sin IconButton)
-          GestureDetector(
-            onTap: onFavoriteTap,
-            child: Icon(
-              station.isFavorite ? Icons.star : Icons.star_border,
-              color: station.isFavorite ? Colors.amber : theme.iconTheme.color,
-            ),
+          //Favorito
+          IconButton(
+            icon: Icon(Icons.star_border, size: 28),
+            onPressed: onFavoriteTap,
           ),
         ],
       ),
