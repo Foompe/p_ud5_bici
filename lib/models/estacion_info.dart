@@ -1,9 +1,10 @@
-//Información (estatica) general de las estaciones
-
+/// Modelo con información estática de una estación
+/// (nombre, dirección, capacidad, tipo)
 class EstacionInfo {
   final String stationId;
   final String name;
-  final String physicalConfiguration; //{REGULAR,ELECTRICBIKESTATION }
+  final String
+  physicalConfiguration; //{REGULAR,ELECTRICBIKESTATION } prodia usar enum
   final String address;
   final int capacity;
 
@@ -23,5 +24,10 @@ class EstacionInfo {
       address: (json['address'] ?? '') as String,
       capacity: (json['capacity'] as num?)?.toInt() ?? 0,
     );
+  }
+
+  //Getter para eltipo de estación
+  bool get isElectricStation {
+    return physicalConfiguration == 'ELECTRICBIKESTATION';
   }
 }

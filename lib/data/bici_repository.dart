@@ -7,14 +7,15 @@ class BiciRepository {
 
   BiciRepository(this.api);
 
-  Future<List<EstacionInfo>> fechInfo() async {
+  //Convertimos los dimanic de BiciApi a los modelos
+  Future<List<EstacionInfo>> fetchInfo() async {
     final list = await api.getInfoEstaciones();
     return list
         .map((e) => EstacionInfo.fromJson(e as Map<String, dynamic>))
         .toList();
   }
 
-  Future<List<EstacionStatus>> fechEstado() async {
+  Future<List<EstacionStatus>> fetchEstado() async {
     final list = await api.getEstadoEstaciones();
     return list
         .map((e) => EstacionStatus.fromJson(e as Map<String, dynamic>))

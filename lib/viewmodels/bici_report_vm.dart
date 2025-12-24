@@ -9,9 +9,9 @@ class BiciReportVm extends ChangeNotifier {
 
   BiciReportVm(this.repo);
 
-  //Estado de la UI 
-  bool loading = false;  //Indica si se estan cargando los datos
-  String? error;         //Mensaje de error si algo falla
+  //Estado de la UI
+  bool loading = false; //Indica si se estan cargando los datos
+  String? error; //Mensaje de error si algo falla
 
   List<EstacionInfo> eInfo = [];
   List<EstacionStatus> eStatus = [];
@@ -26,8 +26,8 @@ class BiciReportVm extends ChangeNotifier {
     notifyListeners();
 
     try {
-      eInfo = await repo.fechInfo();
-      eStatus = await repo.fechEstado();
+      eInfo = await repo.fetchInfo();
+      eStatus = await repo.fetchEstado();
     } catch (e) {
       error = e.toString();
       eInfo = [];
@@ -40,75 +40,69 @@ class BiciReportVm extends ChangeNotifier {
 
   //Metodo para asignar favorito
   void setFavorite(String stationId) {
-    _favoriteStationId = stationId;     //asignamos el parametro tomado
-    notifyListeners();                  //Avisamos
+    _favoriteStationId = stationId; //asignamos el parametro tomado
+    notifyListeners(); //Avisamos
   }
-
 
   /// Lista completa de estaciones listas para la UI
   List<EstacionUiData> get stations {
-  return eInfo.map((info) {
-    final status = eStatus.firstWhere(
-      (s) => s.stationId == info.stationId,
-    );
+    return eInfo.map((info) {
+      final status = eStatus.firstWhere((s) => s.stationId == info.stationId);
 
-    final bikes = status.vehicleTypesAvailable['FIT'] ?? 0;
-    final ebikes = status.vehicleTypesAvailable['EFIT'] ?? 0;
-    final boost = status.vehicleTypesAvailable['BOOST'] ?? 0;
+      final bikes = status.bicisPorTipo('FIT');
+      final ebikes = status.bicisPorTipo('EFIT');
+      final boost = status.bicisPorTipo('BOOST');
 
-    final totalBikes = bikes + ebikes + boost;
+      final totalBikes = bikes + ebikes + boost;
 
-    final occupancyPercent = info.capacity > 0
-    ? double.parse(
-        ((totalBikes / info.capacity) * 100).toStringAsFixed(1),
-      )
-    : 0.0;
+      final occupancyPercent = info.capacity > 0
+          ? double.parse(
+              ((totalBikes / info.capacity) * 100).toStringAsFixed(1),
+            )
+          : 0.0;
 
-    final decisionText = _decisionText(bikes, ebikes);
+      final decisionText = _decisionText(bikes, ebikes, boost);
 
-    //Hora de untima actualización (manejamos el null)
-    final lastUpdatedFormatted = status.lastReported != null
-    ? () {
-        final t = status.lastReported!.toLocal();
-        final h = t.hour.toString().padLeft(2, '0');
-        final m = t.minute.toString().padLeft(2, '0');
-        final s = t.second.toString().padLeft(2, '0');
-        return '$h:$m:$s';
-      }()
-    : '--:--:--';
+      //Hora de untima actualización (manejamos el null)
+      final t = status.lastReported.toLocal();
 
-    return EstacionUiData(
-  id: info.stationId,
-  name: info.name,
-  address: info.address,
-  capacity: info.capacity,
-  isInService: _isInService(status.status),
-  isElectricStation:
-      _isElectricStation(info.physicalConfiguration),
-  numBikesAvailable: status.numBikesAvailable,
-  numBikesDisabled: status.numBikesDisabled,
-  numDocksAvailable: status.numDocksAvailable,
-  numDocksDisabled: status.numDocksDisabled,
-  bikes: bikes,
-  ebikes: ebikes,
-  boost: boost,
-  totalBikes: totalBikes,
-  occupancyPercent: occupancyPercent,
-  lastReported: status.lastReported,
-  lastUpdatedFormatted: lastUpdatedFormatted,
-  decisionText: decisionText,
-  isFavorite: info.stationId == _favoriteStationId,
-);
-  }).toList();
-}
+      final lastUpdatedFormatted =
+          status.lastReported.millisecondsSinceEpoch > 0
+          ? '${t.hour.toString().padLeft(2, '0')}:'
+                '${t.minute.toString().padLeft(2, '0')}:'
+                '${t.second.toString().padLeft(2, '0')}'
+          : '--:--:--';
+
+      return EstacionUiData(
+        id: info.stationId,
+        name: info.name,
+        address: info.address,
+        capacity: info.capacity,
+        isInService: status.isInService,
+        isElectricStation: info.isElectricStation,
+        numBikesAvailable: status.numBikesAvailable,
+        numBikesDisabled: status.numBikesDisabled,
+        numDocksAvailable: status.numDocksAvailable,
+        numDocksDisabled: status.numDocksDisabled,
+        bikes: bikes,
+        ebikes: ebikes,
+        boost: boost,
+        totalBikes: totalBikes,
+        occupancyPercent: occupancyPercent,
+        lastReported: status.lastReported,
+        lastUpdatedFormatted: lastUpdatedFormatted,
+        decisionText: decisionText,
+        isFavorite: info.stationId == _favoriteStationId,
+      );
+    }).toList();
+  }
 
   /// Estación favorita
   EstacionUiData? get favoriteStation {
-    try {
-      return stations.firstWhere((s) => s.isFavorite);
-    } catch (_) {
-      return stations.isNotEmpty ? stations.first : null;
+    for (final s in stations) {
+      if (s.isFavorite) return s;
     }
+    return null;
   }
 
   /// Resto de estaciones
@@ -116,16 +110,8 @@ class BiciReportVm extends ChangeNotifier {
     return stations.where((s) => !s.isFavorite).toList();
   }
 
-  bool _isInService(String status) {
-    return status == 'IN_SERVICE';
-  }
-
-  bool _isElectricStation(String physicalConfiguration) {
-    return physicalConfiguration == 'ELECTRICBIKESTATION';
-  }
-
-  String _decisionText(int bikes, int ebikes) {
-    if (ebikes >= 1) return 'Sí';
+  String _decisionText(int bikes, int ebikes, int boost) {
+    if ((ebikes + boost) >= 1) return 'Sí';
     if (bikes >= 1) return 'Quizá';
     return 'No';
   }

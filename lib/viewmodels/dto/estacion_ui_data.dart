@@ -28,7 +28,7 @@ class EstacionUiData {
   final double occupancyPercent;
 
   //Fecha actualización
-  final DateTime? lastReported;
+  final DateTime lastReported;
   final String lastUpdatedFormatted;
 
   //Datos para muestra

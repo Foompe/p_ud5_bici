@@ -1,13 +1,12 @@
 //Información (dinamica) del estado de la estación
-
 class EstacionStatus {
   final String stationId;
-  final int numBikesAvailable;      //bicis disponibles
-  final int numBikesDisabled;       //bicis desactivadas
-  final String status;              // {PLANNED , IN_SERVICE}
-  final int numDocksAvailable;      // espacios disponibles
-  final int numDocksDisabled;       // espacios desactivados
-  final DateTime? lastReported;     // timestamp convertido
+  final int numBikesAvailable;                  //bicis disponibles
+  final int numBikesDisabled;                   //bicis desactivadas
+  final String status;                          // {PLANNED , IN_SERVICE}
+  final int numDocksAvailable;                  // espacios disponibles
+  final int numDocksDisabled;                   // espacios desactivados
+  final DateTime lastReported;
   final Map<String, int> vehicleTypesAvailable; // ej: {'FIT': 3, 'EFIT': 21, 'BOOST': 0}
 
   EstacionStatus({
@@ -18,7 +17,7 @@ class EstacionStatus {
     required this.numDocksAvailable,
     required this.numDocksDisabled,
     required this.vehicleTypesAvailable,
-    this.lastReported,
+    required this.lastReported,
   });
 
   factory EstacionStatus.fromJson(Map<String, dynamic> json) {
@@ -35,14 +34,11 @@ class EstacionStatus {
       }
     }
 
-    // timestamp en segundos -> DateTime (si existe)
-    DateTime? lastReported;
-    if (json['last_reported'] != null) {
-      final lr = (json['last_reported'] as num?)?.toInt();
-      if (lr != null) {
-        lastReported = DateTime.fromMillisecondsSinceEpoch(lr * 1000);
-      }
-    }
+    // timestamp en segundos -> DateTime
+    final int lr = (json['last_reported'] as num?)?.toInt() ?? 0;
+    final DateTime lastReported = lr > 0
+      ? DateTime.fromMillisecondsSinceEpoch(lr * 1000)
+      : DateTime.fromMillisecondsSinceEpoch(0);
 
     return EstacionStatus(
       stationId: (json['station_id']).toString(),
@@ -54,5 +50,15 @@ class EstacionStatus {
       vehicleTypesAvailable: vTypes,
       lastReported: lastReported,
     );
+  }
+
+  //Metodo para calcular el número de bicis según tipo
+  int bicisPorTipo(String type) {
+    return vehicleTypesAvailable[type] ?? 0;
+  }
+
+  //Getter del estado de la estación
+  bool get isInService {
+    return status == 'IN_SERVICE';
   }
 }
