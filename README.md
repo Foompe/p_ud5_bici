@@ -14,8 +14,10 @@ La aplicación consta de **dos pantallas principales**: una pantalla general y u
 
 ### Home Screen
 
-![home_screen1](image-2.png)    
-![home_screen2](image-3.png)
+<p align="center">
+  <img src="image-2.png" width="250">
+  <img src="image-3.png" width="250">
+</p>
 
 Esta pantalla presenta un **AppBar** con un botón que permite la recarga manual de los datos obtenidos desde la API.
 
