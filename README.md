@@ -36,8 +36,10 @@ Al pulsar sobre cualquiera de las estaciones, se accede a la pantalla de detalle
 
 ### Estación Detail Screen
 
-![Detalle_screen](image-4.png)  
-![Exportacion_pdf](image-5.png)
+<p align="center">
+  <img src="image-4.png" width="250">
+  <img src="image-5.png" width="250">
+</p>
 
 Esta pantalla muestra información detallada de la estación seleccionada, incluyendo su estado, ocupación y disponibilidad.
 
@@ -51,7 +53,9 @@ En la parte inferior de la pantalla se incluye un botón que permite **exportar 
 
 ### Gráfica de barras – *Top 5 estaciones por número de bicicletas*
 
-![Gráfico de barras](image.png)
+<p align="center">
+    <img src="image.png" width="250">
+</p>
 
 - Permite comparar rápidamente las estaciones con mayor disponibilidad de bicicletas.
 - Al pulsar sobre una barra se accede al detalle de la estación correspondiente.
@@ -61,7 +65,9 @@ En la parte inferior de la pantalla se incluye un botón que permite **exportar 
 
 ### Gráfica circular – *Ocupación de una estación*
 
-![Gráfica circular](image-1.png)
+<p align="center">
+    <img src="image-1.png" width="250">
+</p>
 
 - Representa la distribución entre bicicletas disponibles, espacios libres y espacios bloqueados.
 - Permite visualizar proporciones de un total de forma intuitiva.
