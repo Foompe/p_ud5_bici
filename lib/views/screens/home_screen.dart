@@ -34,7 +34,10 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 16),
                 children: [
                   //Gráfica
-                  StationBarChart(stations: vm.stations),
+                  StationBarChart(
+                    stations: vm.topStations,
+                    onStationTap: (station) {_openDetail(context, station);}
+                    ),
 
                   //Favorito
                   if (vm.favoriteStation != null)

@@ -108,6 +108,14 @@ class BiciReportVm extends ChangeNotifier {
     return stations.where((s) => !s.isFavorite).toList();
   }
 
+  /// Top estaciones por número de bicis
+  List<EstacionUiData> get topStations {
+    final sorted = List<EstacionUiData>.from(stations)
+      ..sort((a, b) => b.totalBikes.compareTo(a.totalBikes));
+
+    return sorted.length > 5 ? sorted.take(5).toList() : sorted;
+  }
+
   String _decisionText(int bikes, int ebikes, int boost) {
     if ((ebikes + boost) >= 1) return 'Sí';
     if (bikes >= 1) return 'Quizá';

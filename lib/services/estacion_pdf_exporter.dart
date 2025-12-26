@@ -34,14 +34,10 @@ class StationPdfExporter {
                 style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
               ),
               pw.SizedBox(height: 8),
+              _row('ID', station.id),
               _row('Nombre', station.name),
               _row('Dirección', station.address),
-              _row(
-                'Tipo',
-                station.isElectricStation
-                    ? 'Estación eléctrica'
-                    : 'Estación normal',
-              ),
+              _row('Tipo',station.isElectricStation ? 'Estación eléctrica' : 'Estación normal'),
               _row('Capacidad', station.capacity.toString()),
 
               pw.SizedBox(height: 16),
@@ -52,22 +48,10 @@ class StationPdfExporter {
                 style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
               ),
               pw.SizedBox(height: 8),
-              _row(
-                'Estado',
-                station.isInService ? 'Activa' : 'Inactiva',
-              ),
-              _row(
-                'Bicis disponibles',
-                station.totalBikes.toString(),
-              ),
-              _row(
-                'E-bikes',
-                station.ebikes.toString(),
-              ),
-              _row(
-                'Ocupación',
-                '${station.occupancyPercent.toStringAsFixed(0)}%',
-              ),
+              _row('Estado',station.isInService ? 'Activa' : 'Inactiva'),
+              _row('Bicis disponibles', station.totalBikes.toString()),
+              _row('E-bikes', station.ebikes.toString()),
+              _row('Ocupación','${station.occupancyPercent.toStringAsFixed(0)}%'),
 
               pw.SizedBox(height: 16),
 
@@ -77,14 +61,8 @@ class StationPdfExporter {
                 style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
               ),
               pw.SizedBox(height: 8),
-              _row(
-                'Última actualización',
-                station.lastUpdatedFormatted,
-              ),
-              _row(
-                'Generado el',
-                _formatDateTime(now),
-              ),
+              _row('Última actualización',_formatDateTime(station.lastReported)),
+              _row('Generado el', _formatDateTime(now),),
             ],
           );
         },

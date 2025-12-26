@@ -5,7 +5,6 @@ import 'package:p_ud5_bici/views/screens/home_screen.dart';
 import 'package:p_ud5_bici/viewmodels/bici_report_vm.dart';
 import 'package:provider/provider.dart';
 
-
 void main() {
   runApp(const MyApp());
 }
