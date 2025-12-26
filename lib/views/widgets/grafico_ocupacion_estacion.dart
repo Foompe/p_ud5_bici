@@ -99,6 +99,7 @@ class GraficoOcupacionEstacion extends StatelessWidget {
       value: value,
       color: color,
       radius: 45,
+      title: title,
       titleStyle: const TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.bold,

@@ -1,53 +1,53 @@
-# 📱 Bici Coruña 2.0
+# Bici Coruña 2.0
 
-Aplicación móvil desarrollada en **Flutter** que consume la API pública del sistema de bicicletas de A Coruña para mostrar información actualizada sobre las estaciones, su ocupación y disponibilidad de bicicletas.
+Aplicación móvil desarrollada en **Flutter** que consume la API pública de biciCoruña para mostrar información estatica y dinamica sobre el estado de las estaciones de bicicletas.
 
 ---
 
-## 🧭 Enfoque del proyecto
+## Enfoque del proyecto
 
 El proyecto sigue una arquitectura **MVVM (Model – View – ViewModel)** para separar responsabilidades y mejorar la legibilidad del código.
 
-- **Model**  
-  Representa los datos obtenidos directamente de la API (`EstacionInfo`, `EstacionStatus`).
+Consta de dos pantallas una general y otra con detalles de la estación.
 
-- **Repository**  
-  Se encarga de la comunicación con la API y de transformar los datos en bruto en modelos de dominio.
+**home_screen**
 
-- **ViewModel**  
-  Contiene la lógica de negocio y prepara los datos para la interfaz (`EstacionUiData`), evitando que la vista tenga lógica compleja.
+![home_screen1](image-2.png)    ![home_screen2](image-3.png)
 
-- **View (UI)**  
-  Muestra los datos y gestiona la interacción del usuario (navegación, selección de estación favorita y refresco de información).
+Esta pantalla contiene un appBar en la que tenemos un boton que nos permite hacer la recarga de datos, debajo de esta tenemos un body que contiene una lista con todos los elementos, en esta lista, empezando desde la parte superior tenemos un grafico de columnas mostrando el top 5 estaciones con mas bicicletas, debajo tenemos un grafico circular con informacion sobre la ocupacion de la estacion seleccionada como favorita y debajo tenemso el resto de estaciones con un pequeño detalle de bicis disponibles y un porcentaje de ocupacion demas de icono de una estrella que permite marcalo como favorito, al pulsar nos llebara a los detalles de la estacion
 
-Este enfoque facilita el mantenimiento, mejora la organización del código y reduce el acoplamiento entre la lógica y la interfaz.
+**estacion_detail_screen** 
+
+![Detalle_screen](image-4.png)  ![Exportacion_pdf](image-5.png)
+
+Esta pantalla contiene los detalles de la estación seleccionada, ademas de un elemento que segun la logica interna nos informa si nos compensa bajar ahora, en el final de la pagina tenemos un boton que nos permite experotar a pdf toda la informacion del la estacion sececcionada
+
 
 ---
 
-## 📊 Justificación de las gráficas elegidas
+## Gráficas elegidas
 
 ### Gráfica de barras – *Top 5 estaciones por número de bicicletas*
 
+![Gráfico de barras](image.png)
+
 - Permite comparar rápidamente las estaciones con mayor disponibilidad.
-- Es adecuada para representar rankings.
-- Se limita al **Top 5** para evitar saturación visual y mejorar la claridad.
+- Al pulsar las barras permite acceder a detalles de la estación.
+- Se ha puesto solo las barras, sin marcadores de altura para no saturar.
 
 ### Gráfica circular – *Ocupación de una estación*
 
-- Representa la distribución de bicicletas y espacios disponibles.
+![Gráfica circular](image-1.png)
+
+- Representa la distribución de bicicletas, espacios disponibles y espacios bloqueados
 - Permite visualizar proporciones de un total de forma intuitiva.
 - Se reutiliza tanto en la vista de detalle como en la estación favorita.
+- Permite pulsar sobre este elemento para ver detalles de la estaciñon
 
-Las dos gráficas se complementan:
-- **Barras → comparación**
-- **Circular → distribución**
 
 ---
 
-## 📦 Tecnologías y dependencias utilizadas
-
-- **Flutter**  
-  Framework principal para el desarrollo de la aplicación móvil.
+## Dependencias utilizadas
 
 - **http**  
   Consumo de la API REST pública del sistema de bicicletas.
@@ -65,7 +65,3 @@ Las dos gráficas se complementan:
   Visualización, impresión y exportación del PDF generado.
 
 ---
-
-## ✅ Conclusión
-
-La aplicación presenta información compleja de forma clara e intuitiva, aplicando buenas prácticas de arquitectura, visualización de datos y reutilización de componentes, además de ofrecer funcionalidades prácticas como la exportación de informes en PDF.
